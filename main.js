@@ -128,11 +128,3 @@ const operate = (operator, firstNumber, secondNumber) => {
             return divide(firstNumber, secondNumber);
     }
 }
-
-const allbuttons = document.querySelectorAll("button");
-const h1 = document.querySelector("h1")
-allbuttons.forEach(button => {
-    button.addEventListener("click", () => {
-        h1.textContent = `firstNumber: ${firstNumber} | operator: ${operator} | secondNumber: ${secondNumber} | placeholder: ${placeholder} | operation pressed?: ${operationPressed} | currOperation: ${currOperation}`
-    })
-})
