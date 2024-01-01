@@ -4,6 +4,25 @@ const equalBtn = document.querySelector(".equal-btn");
 const numberBtns = document.querySelectorAll(".number-btn");
 const operationBtns = document.querySelectorAll(".operation");
 const decimalBtn = document.querySelector(".decimal-btn");
+const deleteBtn = document.querySelector(".delete-btn");
+
+deleteBtn.addEventListener("click", () => {
+    const firstNumberToDelete = screen.textContent == firstNumber;
+
+    if (screen.textContent !== "0" && currOperation !== "" && secondNumber !== 0 || !operationPressed) {
+        screen.textContent = screen.textContent.slice(0, screen.textContent.length - 1);
+        console.log(firstNumberToDelete)
+        if (screen.textContent === "") {
+            screen.textContent = "0";
+        }
+        
+        if (firstNumberToDelete) {
+            firstNumber = Number(screen.textContent);
+        } else {
+            secondNumber = Number(screen.textContent);
+        }
+    }
+})
 
 decimalBtn.addEventListener("click", () => {
     if (!screen.textContent.includes(".")) {

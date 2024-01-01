@@ -14,7 +14,7 @@
     border: 1px solid black;
     width: 80%;
     height: 60px;
-    background: gray;
+    background: rgb(88, 89, 90);
     padding-right: 10px;
     display: flex;
     justify-content: flex-end;
