@@ -3,6 +3,13 @@ const clearBtn = document.querySelector(".clear-btn");
 const equalBtn = document.querySelector(".equal-btn");
 const numberBtns = document.querySelectorAll(".number-btn");
 const operationBtns = document.querySelectorAll(".operation");
+const decimalBtn = document.querySelector(".decimal-btn");
+
+decimalBtn.addEventListener("click", () => {
+    if (!screen.textContent.includes(".")) {
+        screen.textContent += ".";
+    }
+})
 
 clearBtn.addEventListener("click", () => {
     firstNumber = 0;
@@ -11,7 +18,7 @@ clearBtn.addEventListener("click", () => {
     placeholder = 0;
     operationPressed = false;
     currOperation = "";
-    screen.textContent = "";
+    screen.textContent = "0";
 })
 
 operationBtns.forEach(btn => {
@@ -21,7 +28,7 @@ operationBtns.forEach(btn => {
         if (currOperation != "") {
             placeholder = operate(currOperation, firstNumber, secondNumber);
             firstNumber = isNaN(placeholder) ? firstNumber : placeholder;
-            screen.textContent = isNaN(placeholder) ? 0 : placeholder % 1 !== 0 ? placeholder.toFixed(8) : placeholder;
+            screen.textContent = isNaN(placeholder) ? 0 : Math.floor(placeholder % 1) !== 0 ? placeholder.toFixed(8) : placeholder;
             if (isNaN(placeholder)) {
                 placeholder = 0;
             }
@@ -52,12 +59,15 @@ equalBtn.addEventListener("click", () => {
     if (secondNumber === null) {
         secondNumber = firstNumber;
     }
+
     placeholder = operate(currOperation, firstNumber, secondNumber);
-    screen.textContent = isNaN(placeholder) ? placeholder : placeholder % 1 !== 0 ? placeholder.toFixed(8) : placeholder;
+    screen.textContent = isNaN(placeholder) ? placeholder : Math.floor(placeholder % 1) !== 0 ? placeholder.toFixed(8) : placeholder;
     firstNumber = isNaN(placeholder) ? 0 : placeholder;
+
     if (isNaN(placeholder)) {
         placeholder = 0;
     }
+
     operationPressed = false;
     secondNumber = currOperation !== "*" ? 0 : 1;
 })
@@ -66,7 +76,7 @@ const showOnScreen = (e) => {
     const value = e.target.textContent;
 
     if (!operationPressed) {
-        if (screen.textContent == placeholder || isNaN(screen.textContent)) {
+        if (screen.textContent == placeholder && !screen.textContent.includes(".") || isNaN(screen.textContent)) {
             screen.textContent = "";
             firstNumber = 0;
         }
@@ -113,6 +123,8 @@ const multiply = (num1, num2) => num1 * num2;
 const divide = (num1, num2) => {
     if (num2 === 0) {
         return "Not a number";
+    } else {
+        return num1 / num2;
     }
 };
 
@@ -126,5 +138,7 @@ const operate = (operator, firstNumber, secondNumber) => {
             return multiply(firstNumber, secondNumber);
         case "/":
             return divide(firstNumber, secondNumber);
+        default:
+            return firstNumber;
     }
 }
