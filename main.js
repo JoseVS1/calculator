@@ -6,12 +6,20 @@ const operationBtns = document.querySelectorAll(".operation");
 const decimalBtn = document.querySelector(".decimal-btn");
 const deleteBtn = document.querySelector(".delete-btn");
 
+let fontSize = 40;
+
+screen.style.fontSize = `${fontSize}px`;
+
 deleteBtn.addEventListener("click", () => {
     const firstNumberToDelete = screen.textContent == firstNumber;
 
     if (screen.textContent !== "0" && currOperation !== "" && secondNumber !== 0 || !operationPressed) {
+        if (fontSize < 40) {
+            fontSize += 2;
+        }
+        
+        screen.style.fontSize = `${fontSize}px`;
         screen.textContent = screen.textContent.slice(0, screen.textContent.length - 1);
-        console.log(firstNumberToDelete)
         if (screen.textContent === "") {
             screen.textContent = "0";
         }
@@ -92,6 +100,10 @@ equalBtn.addEventListener("click", () => {
 })
 
 const showOnScreen = (e) => {
+    if (screen.textContent.length > 13 && fontSize > 10) {
+        screen.style.fontSize = `${fontSize}px`;
+        fontSize -= 2;
+    }
     const value = e.target.textContent;
 
     if (!operationPressed) {
@@ -161,3 +173,51 @@ const operate = (operator, firstNumber, secondNumber) => {
             return firstNumber;
     }
 }
+
+document.addEventListener("keypress", (e) => {
+    const numbers = {
+        7: "seven",
+        8: "eight",
+        9: "nine",
+        4: "four",
+        5: "five",
+        6: "six",
+        1: "one",
+        2: "two",
+        3: "three",
+        0: "zero"
+    }
+    
+    const key = e.key;
+
+    if (!isNaN(key)) {
+        document.querySelector(`#${numbers[key]}`).click();
+    }
+
+    switch(key) {
+        case "/":
+            document.querySelector("#divide").click();
+            break;
+        case "*":
+            document.querySelector("#multiply").click();
+            break;
+        case "-":
+            document.querySelector("#subtract").click();
+            break;
+        case "+":
+            document.querySelector("#add").click();
+            break;
+        case "Enter":
+            equalBtn.click();
+            break;
+        case "c":
+            clearBtn.click();
+            break;
+        case ".":
+            decimalBtn.click();
+            break;
+        case "d":
+            deleteBtn.click();
+            break;
+    }
+})
