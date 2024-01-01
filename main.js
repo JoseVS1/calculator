@@ -6,7 +6,7 @@ const operationBtns = document.querySelectorAll(".operation");
 const decimalBtn = document.querySelector(".decimal-btn");
 const deleteBtn = document.querySelector(".delete-btn");
 
-let fontSize = 40;
+let fontSize = 50;
 
 screen.style.fontSize = `${fontSize}px`;
 
@@ -14,7 +14,7 @@ deleteBtn.addEventListener("click", () => {
     const firstNumberToDelete = screen.textContent == firstNumber;
 
     if (screen.textContent !== "0" && currOperation !== "" && secondNumber !== 0 || !operationPressed) {
-        if (fontSize < 40) {
+        if (fontSize < 50) {
             fontSize += 2;
         }
         
@@ -46,6 +46,8 @@ clearBtn.addEventListener("click", () => {
     operationPressed = false;
     currOperation = "";
     screen.textContent = "0";
+    fontSize = 50;
+    screen.style.fontSize = `${fontSize}px`;
 })
 
 operationBtns.forEach(btn => {
@@ -61,20 +63,20 @@ operationBtns.forEach(btn => {
             }
         }
 
-        switch(btn.textContent) {
-            case "/":
+        switch(btn.className) {
+            case "divide-btn operation":
                 currOperation = "/";
                 secondNumber = 0;
                 break;
-            case "X":
+            case "multiply-btn operation":
                 currOperation = "*";
                 secondNumber = 0;
                 break;
-            case "-":
+            case "subtract-btn operation":
                 currOperation = "-";
                 secondNumber = 0;
                 break;
-            case "+":
+            case "add-btn operation":
                 currOperation = "+";
                 secondNumber = 0;
                 break;
@@ -100,7 +102,11 @@ equalBtn.addEventListener("click", () => {
 })
 
 const showOnScreen = (e) => {
-    if (screen.textContent.length > 13 && fontSize > 10) {
+    if (screen.textContent.length === 60) {
+        return;
+    }
+
+    if (screen.textContent.length > 8 && fontSize > 8) {
         screen.style.fontSize = `${fontSize}px`;
         fontSize -= 2;
     }
@@ -187,7 +193,7 @@ document.addEventListener("keypress", (e) => {
         3: "three",
         0: "zero"
     }
-    
+
     const key = e.key;
 
     if (!isNaN(key)) {
